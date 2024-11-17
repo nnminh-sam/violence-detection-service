@@ -8,17 +8,25 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 # Set the working directory
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies (including python-dev, build-essential, and numpy dependencies)
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
+    python3-dev \
     gcc \
+    libatlas-base-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip to the latest version
+RUN pip install --upgrade pip
+
+# Install numpy first to ensure it's available before scikit-learn
+RUN pip install --no-cache-dir numpy
 
 # Copy requirements.txt first to leverage Docker cache
 COPY requirements.txt /app/
 
-# Install Python dependencies
+# Install Python dependencies from requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the project files
