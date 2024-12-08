@@ -1,11 +1,13 @@
 version: "3.8"
 
 services:
-  web:
+  prediction-service:
+    container_name: violence-prediction-service
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
+      - ~/media:/app/media # Mount the host's ~/media directory to container's /app/media
     ports:
       - "80:8000"
     environment:
@@ -28,6 +30,8 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     networks:
       - app-network
 

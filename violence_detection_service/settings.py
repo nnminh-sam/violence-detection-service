@@ -10,9 +10,10 @@ SECRET_KEY = 'django-insecure-1p3tk^wgz7&2@w$1u1(3ol7xuiidtivbk_x$ijdg0b=3%oo7wy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "206.189.90.37",
-    "localhost",
+RUNNING_MODE = 'dev'
+
+ALLOWED_HOSTS = [] if RUNNING_MODE == 'dev' else [
+    "206.189.90.37"
 ]
 
 INSTALLED_APPS = [
@@ -64,7 +65,7 @@ DATABASES = {
         'NAME': 'violence-prediction-db',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'localhost',
+        'HOST': 'localhost' if RUNNING_MODE == 'dev' else 'db',
         'PORT': '5432',
     }
 }
@@ -95,4 +96,4 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') if RUNNING_MODE == 'dev' else '/app/media/'
