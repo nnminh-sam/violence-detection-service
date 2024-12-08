@@ -12,15 +12,10 @@ class ResponseData:
         self.error = error
 
     def build_response(self):
-        if self.data is not None:
-            return JsonResponse({
-                "status": self.status,
-                "message": self.message,
-                "data": JsonResponse(data=self.data, safe=False)
-            })
-
-        return JsonResponse({
+        response_content = {
             "status": self.status,
             "message": self.message,
+            "data": self.data,
             "error": self.error
-        })
+        }
+        return JsonResponse(response_content)

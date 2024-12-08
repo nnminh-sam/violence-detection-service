@@ -1,11 +1,8 @@
 from pathlib import Path
+import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-1p3tk^wgz7&2@w$1u1(3ol7xuiidtivbk_x$ijdg0b=3%oo7wy'
@@ -17,9 +14,6 @@ ALLOWED_HOSTS = [] if DEBUG else [
     "206.189.90.37"
 ]
 
-
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -28,7 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'violence_video_prediction_service'
+    'api',
+    'system',
 ]
 
 MIDDLEWARE = [
@@ -64,12 +59,14 @@ WSGI_APPLICATION = 'violence_detection_service.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'violence-prediction-db',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
-AUTH_USER_MODEL = 'violence_video_prediction_service.ViolencePredictionUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -95,3 +92,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
