@@ -7,4 +7,5 @@ def health_check(request):
         status='Success',
         message='System is running',
         code=200,
+        error=None
     ).build_response()
