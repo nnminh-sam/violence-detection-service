@@ -8,3 +8,32 @@ services:
       - .:/app
     ports:
       - "80:8000"
+    environment:
+      POSTGRES_DB: violence-prediction-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  db:
+    image: postgres:16
+    container_name: violence-prediction-db
+    environment:
+      POSTGRES_DB: violence-prediction-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
